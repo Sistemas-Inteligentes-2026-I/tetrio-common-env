@@ -1,0 +1,14 @@
+{
+  "browser": "chrome",
+  "window_title_hint": "TETR.IO",
+  "base_resolution": {
+    "width": 1920,
+    "height": 1080
+  },
+  "browser_zoom": 1.0,
+  "capture_fps": 60,
+  "safe_mode": true,
+  "panic_key": "f12",
+  "calibration_profile": "configs/calibration/chrome_1080p.json",
+  "keymap_path": "configs/keymap.default.json"
+}
