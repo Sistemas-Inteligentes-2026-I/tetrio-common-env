@@ -2,7 +2,14 @@ from __future__ import annotations
 
 import unittest
 
-from tetrio_env.types import BOARD_COLS, BOARD_ROWS, BoardState, FrameMeta, Observation, PieceState
+from tetrio_env.types import (
+    BOARD_COLS,
+    BOARD_ROWS,
+    BoardState,
+    FrameMeta,
+    Observation,
+    PieceState,
+)
 
 
 class TypesTests(unittest.TestCase):
@@ -21,7 +28,10 @@ class TypesTests(unittest.TestCase):
             PieceState(piece="X", x=0, y=0)
 
     def test_observation_accepts_valid_shape(self) -> None:
-        observation = Observation(board=BoardState.empty(), frame=FrameMeta(frame_id=1, timestamp_ms=10))
+        observation = Observation(
+            board=BoardState.empty(),
+            frame=FrameMeta(frame_id=1, timestamp_ms=10),
+        )
 
         self.assertFalse(observation.is_game_over)
 

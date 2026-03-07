@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import struct
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable, Mapping, Protocol
+from typing import Protocol
 
 from tetrio_env.capture.frame_clock import now_timestamp_ms
 
@@ -132,7 +133,7 @@ class ScreenGrabber:
             self._backend.close()
             self._backend = None
 
-    def __enter__(self) -> "ScreenGrabber":
+    def __enter__(self) -> ScreenGrabber:
         self.start()
         return self
 

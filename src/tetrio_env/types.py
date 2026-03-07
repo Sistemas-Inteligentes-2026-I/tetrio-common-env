@@ -90,7 +90,7 @@ class BoardState:
                 raise ValueError("Board cells must be binary occupancy values (0 or 1)")
 
     @classmethod
-    def empty(cls) -> "BoardState":
+    def empty(cls) -> BoardState:
         return cls(cells=tuple(tuple(0 for _ in range(BOARD_COLS)) for _ in range(BOARD_ROWS)))
 
 

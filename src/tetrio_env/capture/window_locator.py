@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 import ctypes
+from collections.abc import Sequence
 from ctypes import wintypes
 from dataclasses import dataclass
-from typing import Sequence
 
 _IS_WINDOWS = ctypes.sizeof(ctypes.c_void_p) == ctypes.sizeof(wintypes.HWND)
 
@@ -205,9 +205,7 @@ def find_window(title_hint: str) -> WindowInfo:
     candidates = list_visible_windows(title_hint)
     best = select_best_window(candidates, title_hint)
     if best is None:
-        raise WindowNotFoundError(
-            f"No visible window matched title hint '{title_hint}'"
-        )
+        raise WindowNotFoundError(f"No visible window matched title hint '{title_hint}'")
     return best
 
 
