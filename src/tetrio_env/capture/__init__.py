@@ -4,12 +4,16 @@ from tetrio_env.capture.frame_clock import FrameClock, FrameTick, now_timestamp_
 from tetrio_env.capture.screen_grabber import (
     CaptureBackendError,
     CaptureError,
-    CaptureRegion,
     CapturedFrame,
-    grab_region_once,
+    CaptureRegion,
     ScreenGrabber,
+    grab_region_once,
 )
 from tetrio_env.capture.window_locator import (
+    WindowApiError,
+    WindowInfo,
+    WindowNotFoundError,
+    WindowRect,
     find_window,
     get_client_rect,
     get_foreground_window_handle,
@@ -18,10 +22,6 @@ from tetrio_env.capture.window_locator import (
     list_visible_windows,
     locate_window,
     select_best_window,
-    WindowApiError,
-    WindowInfo,
-    WindowNotFoundError,
-    WindowRect,
 )
 
 __all__ = [
