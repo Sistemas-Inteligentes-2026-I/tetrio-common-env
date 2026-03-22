@@ -1,0 +1,10 @@
+{
+  "left": "left",
+  "right": "right",
+  "rotate_cw": "x",
+  "rotate_ccw": "z",
+  "soft_drop": "down",
+  "hard_drop": "space",
+  "hold": "c",
+  "noop": ""
+}

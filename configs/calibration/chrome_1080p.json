@@ -1,0 +1,26 @@
+{
+  "name": "chrome_1080p_default",
+  "browser": "chrome",
+  "base_resolution": {
+    "width": 1920,
+    "height": 1080
+  },
+  "board_rect": {
+    "x": 760,
+    "y": 140,
+    "width": 400,
+    "height": 800
+  },
+  "hold_rect": {
+    "x": 640,
+    "y": 260,
+    "width": 96,
+    "height": 96
+  },
+  "next_queue_rect": {
+    "x": 1180,
+    "y": 240,
+    "width": 120,
+    "height": 360
+  }
+}

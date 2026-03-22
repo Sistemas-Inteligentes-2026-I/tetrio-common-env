@@ -1,84 +1,82 @@
 # TETR.IO Common Environment
 
-Ambiente común para experimentar con agentes que interactúan con una sala privada de TETR.IO usando únicamente:
+Shared Windows environment for teams that build TETR.IO browser agents with visual input and keyboard output only.
 
-- procesamiento visual de pantalla
-- simulación de teclado
+## Goal
 
-## Objetivo
+This repository provides common infrastructure to:
 
-Este repositorio proporciona una base compartida para que múltiples equipos construyan y prueben agentes sobre un mismo entorno técnico, sin depender de internals del juego.
+- capture game frames from the browser window
+- calibrate the useful game region per machine
+- reconstruct a standard visible board state
+- expose a stable agent interface
+- emit keyboard input with safety checks
+- record telemetry for debugging and replay
 
-El repositorio común incluye:
+This repository does not include private competitive strategy.
 
-- captura de pantalla
-- calibración de la región del juego
-- extracción visual del estado
-- interfaz estándar para agentes
-- simulación de teclado
-- logging y herramientas de depuración
+## Scope Rules
 
-El repositorio común **no** incluye lógica competitiva avanzada ni la estrategia particular de cada equipo.
+- No memory reading from game processes.
+- No DOM manipulation to extract hidden game state.
+- No private/internal game API usage for play decisions.
+- Observation must come from screen pixels only.
+- Actions must go through the shared safe keyboard backend.
 
-## Alcance y restricciones
+## Baseline Environment
 
-Este proyecto está diseñado para pruebas en salas privadas y bajo las reglas específicas de la competencia o entorno autorizado.
+- OS: Windows
+- Python: 3.11+
+- Browser target: TETR.IO in Chrome (official baseline) and Edge (compatibility target)
+- Base resolution: 1920x1080
+- Browser zoom: 100%
 
-Restricciones de diseño:
+## Repository Layout
 
-- no usar hacks
-- no leer memoria del proceso
-- no manipular DOM del juego para extraer estado
-- no usar APIs privadas o internas del juego para jugar
-- solo lectura visual de pantalla y emisión de teclado
+- `src/tetrio_env/`: application package
+- `configs/`: session, keymap, and calibration profiles
+- `docs/`: scope, architecture, and interface contracts
+- `tools/`: CLI helpers for calibration, inspection, and recording
+- `tests/`: unit tests and fixture data
+- `.github/`: CI and contribution templates
 
-Cada equipo es responsable de verificar que su uso esté permitido por la organización de la competencia.
+## Quick Start
 
-## Plataforma objetivo
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install -e .[dev]
+pytest
+```
 
-- Sistema operativo: Windows
-- Runtime principal: Python 3.11+
-- Cliente objetivo: TETR.IO en navegador
-- Navegador soportado inicialmente: Chrome / Edge
-- Resolución base recomendada: 1920x1080
-- Zoom del navegador: 100%
+## Capture Inspect Tool (Phase 4)
 
-## Arquitectura
+```powershell
+python tools/inspect_frame.py --frames 5
+```
 
-El pipeline general es:
+Useful flags:
 
-1. capturar frame de la región del juego
-2. detectar tablero, pieza activa, next queue y hold
-3. construir una observación estándar
-4. pasar la observación al agente
-5. traducir la acción del agente a eventos de teclado
-6. registrar telemetría para depuración
+- `--list-windows`
+- `--title-hint "TETR.IO"`
+- `--allow-unfocused`
+- `--include-window-frame`
 
-## Estructura del repositorio
+## Core Documents
 
-- `src/tetrio_env/capture/`: captura de pantalla y sincronización
-- `src/tetrio_env/calibration/`: calibración y perfiles
-- `src/tetrio_env/vision/`: extracción visual del estado
-- `src/tetrio_env/control/`: simulación de teclado y seguridad
-- `src/tetrio_env/agents/`: agentes de ejemplo
-- `src/tetrio_env/telemetry/`: logging, grabación y exportación
-- `tools/`: scripts operativos
-- `configs/`: perfiles de navegador, resolución y teclas
-- `docs/`: documentación del proyecto
+- `docs/project_scope.md`
+- `docs/architecture.md`
+- `docs/agent_interface.md`
+- `docs/roadmap.md`
 
-## Interfaz del agente
+## Current Status
 
-Todo agente debe implementar una interfaz compatible con el ambiente común.
+The repository now includes the baseline for phases 0 to 4:
 
-Ejemplo conceptual:
-
-```python
-class Agent:
-    def reset(self) -> None:
-        ...
-
-    def act(self, observation) -> str:
-        # retorna una acción lógica:
-        # "left", "right", "rotate_cw", "rotate_ccw",
-        # "soft_drop", "hard_drop", "hold", "noop"
-        ...
+- governance decisions and architecture contracts
+- Python package bootstrap and tooling
+- config and domain types foundations
+- capture utilities: window discovery, frame clock, screen grabber
+- inspection tool that saves debug frames as BMP
+- unit tests for config, types, and capture helpers
